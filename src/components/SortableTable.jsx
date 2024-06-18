@@ -54,7 +54,7 @@ function SortableTable({ current_data, previous_data }) {
                         const pet_color = pet_diff > 0 ? "text-green-500" : pet_diff < 0 ? "text-red-500" : "text-gray-500";
 
                         return (
-                            <tr className="text-neutral-300 border-t border-gray-700">
+                            <tr className="text-neutral-300 border-t border-gray-700" key={index}>
                                 <td className="text-right text-slate-500 pr-1">{index + 1}</td> 
                                 <td>
                                     <div className="md:flex md:items-center">
