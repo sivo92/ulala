@@ -156,7 +156,7 @@ function SortableTable({ current_data, previous_data }) {
 
   return (
     <>
-        <div className="bg-gray-800 text-white m-4">
+        <div className="bg-gray-800 text-white m-1">
             <div className="m-4 flex justify-center items-center">
                 <label className="inline-flex items-center cursor-pointer">
                     <input type="checkbox" className="sr-only peer" onChange={sortByGains} />
