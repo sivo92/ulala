@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import SortableTable from '../../components/SortableTable.jsx';
 
 interface Dumps {
     id: string;
@@ -34,7 +35,7 @@ const dump = dumps[index];
 const previous_dump = index > 0 ? dumps[index - 1] : null;
 
 let current_data: Dump;
-let previous_data: Dump;
+let previous_data: Dump | null = null;
 try {
     current_data = await fetch("https://ulala-au3.pages.dev/" + dump.file).then(resp => resp.json());
     if (previous_dump) {
@@ -46,71 +47,6 @@ try {
 ---
 
 <Layout title={dump.id}>
-    <div class="bg-gray-800 text-white m-4">
-        <table class="table-auto sortable w-3/4 mx-auto">
-            <thead>
-                <tr class="text-orange-300">
-                    <th class="text-lg font-bold text-left pb-4"></th>
-                    <th class="text-lg font-bold text-left pb-4">Name</th>
-                    <th class="text-lg font-bold text-left pb-4 pl-3 pr-3">Power</th>
-                    <th class="text-lg font-bold text-left pb-4 pl-3 pr-3">Level</th>
-                    <th class="text-lg font-bold text-left pb-4">Pet</th>
-                </tr>
-            </thead>
-            <tbody>
-                {current_data.chars.map((char: Char, index: number) => {
-                    const previous_char = previous_data && previous_data.chars ? previous_data.chars.find((c: Char) => c.char_id === char.char_id) : undefined;    
-                    const cp_diff = previous_char?.char_cp ? char.char_cp - previous_char.char_cp : 0;
-                    const level_diff = previous_char?.char_level ? char.char_level - previous_char.char_level : 0;
-                    const pet_diff = previous_char?.pet_level ? char.pet_level - previous_char.pet_level : 0;
-
-                    const cp_arrow = cp_diff > 0 ? "↑" : cp_diff < 0 ? "↓" : "=";
-                    const level_arrow = level_diff > 0 ? "↑" : level_diff < 0 ? "↓" : "=";
-                    const pet_arrow = pet_diff > 0 ? "↑" : pet_diff < 0 ? "↓" : "=";
-
-                    const cp_color = cp_diff > 0 ? "text-green-500" : cp_diff < 0 ? "text-red-500" : "text-gray-500";
-                    const level_color = level_diff > 0 ? "text-green-500" : level_diff < 0 ? "text-red-500" : "text-gray-500";
-                    const pet_color = pet_diff > 0 ? "text-green-500" : pet_diff < 0 ? "text-red-500" : "text-gray-500";
-
-                    return (
-                        <tr class="text-neutral-300">
-                             <td class="text-right text-slate-500 pr-1">{index + 1}</td> 
-                            <td>
-                                <div class="md:flex md:items-center">
-                                    {!previous_char && <span class="text-sm text-red-500">NEW</span>}<span class="text-lg font-bold">{char.char_name}</span>
-                                </div>
-
-                            </td>
-                            <td>
-                                <div class="md:flex md:items-center pl-3 pr-3">
-                                    <span class="text-lg font-bold">{Number(char.char_cp).toLocaleString()}</span>
-                                    <div class="md:ml-2">
-                                        <span class={`text-sm ${cp_color}`}>{cp_arrow} {Number(cp_diff).toLocaleString()}</span>
-                                    </div>
-                                </div>
-                               
-                            </td>
-                            <td>
-                                <div class="md:flex md:items-center pl-3 pr-3">
-                                    <span class="text-lg font-bold">{Number(char.char_level).toLocaleString()}</span>
-                                    <div class="md:ml-2">
-                                        <span class={`text-sm ${level_color}`}>{level_arrow} {Number(level_diff).toLocaleString()}</span>
-                                    </div>
-                                    
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md:flex md:items-center">
-                                    <span class="text-lg font-bold">{Number(char.pet_level).toLocaleString()}</span>
-                                    <div class="md:ml-2">
-                                        <span class={`text-sm ${pet_color}`}>{pet_arrow} {Number(pet_diff).toLocaleString()}</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
-    </div>
+    <SortableTable current_data={current_data} previous_data={previous_data} client:visible />
 </Layout>
+
