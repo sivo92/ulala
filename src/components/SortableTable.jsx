@@ -226,12 +226,12 @@ function SortableTable({ current_data, previous_data }) {
                                 <td className="text-right text-slate-500 pr-1">{index + 1}</td> 
                                 <td>
                                     <div className="md:flex md:items-center">
-                                        {!previous_char && <span className="text-sm text-red-500">NEW</span>}<span className="text-lg font-bold">{char.char_name}</span>
+                                        {!previous_char && <span className="text-sm text-red-500">NEW</span>}<span className="text-base font-bold">{char.char_name}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="md:flex md:items-center pl-3 pr-3">
-                                        <span className="text-lg font-bold">{Number(char.char_cp).toLocaleString()}</span>
+                                        <span className="text-base font-bold">{Number(char.char_cp).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${cp_color}`}>{cp_arrow} {Number(cp_diff).toLocaleString()}</span>
                                         </div>
@@ -239,7 +239,7 @@ function SortableTable({ current_data, previous_data }) {
                                 </td>
                                 <td>
                                     <div className="md:flex md:items-center pl-3 pr-3">
-                                        <span className="text-lg font-bold">{Number(char.char_level).toLocaleString()}</span>
+                                        <span className="text-base font-bold">{Number(char.char_level).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${level_color}`}>{level_arrow} {Number(level_diff).toLocaleString()}</span>
                                         </div>
@@ -248,7 +248,7 @@ function SortableTable({ current_data, previous_data }) {
                                 </td>
                                 <td>
                                     <div className="md:flex md:items-center">
-                                        <span className="text-lg font-bold">{Number(char.pet_level).toLocaleString()}</span>
+                                        <span className="text-base font-bold">{Number(char.pet_level).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${pet_color}`}>{pet_arrow} {Number(pet_diff).toLocaleString()}</span>
                                         </div>
