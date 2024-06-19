@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import SortableTable from '../../components/SortableTable.jsx';
+import PowerList from '../../components/PowerList.jsx';
 
 interface Dumps {
     id: string;
@@ -28,7 +28,7 @@ const dumps = await fetch("https://ulala-au3.pages.dev/dumps.json").then(resp =>
 
 const index = dumps.findIndex((dump: Dumps) => dump.id === id);
 if (index === -1) {
-    return Astro.redirect("/");
+    return Astro.redirect("/power-lists");
 }
 
 const dump = dumps[index];
@@ -37,16 +37,16 @@ const previous_dump = index > 0 ? dumps[index - 1] : null;
 let current_data: Dump;
 let previous_data: Dump | null = null;
 try {
-    current_data = await fetch("https://ulala-au3.pages.dev/" + dump.file).then(resp => resp.json());
+    current_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${dump.file}`).then(resp => resp.json());
     if (previous_dump) {
-        previous_data = await fetch("https://ulala-au3.pages.dev/" + previous_dump.file).then(resp => resp.json());
+        previous_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${previous_dump.file}`).then(resp => resp.json());
     }
 } catch (error) {
-    return Astro.redirect("/");
+    return Astro.redirect("/power-lists");
 }
 ---
 
 <Layout title={dump.id}>
-    <SortableTable client:load current_data={current_data} previous_data={previous_data} />
+    <PowerList client:load current_data={current_data} previous_data={previous_data} />
 </Layout>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function SortableTable({ current_data, previous_data }) {
+function PowerList({ current_data, previous_data }) {
     const [sortedData, setSortedData] = useState(current_data.chars);
     const [isSortedByGains, setIsSortedByGains] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: "power", direction: "desc" });
@@ -58,7 +58,6 @@ function SortableTable({ current_data, previous_data }) {
                     setSortedData(sorted);
                 }  
             }
-
 
             if (sortConfig.key === "level") {
                 if (sortConfig.direction === "asc") {
@@ -264,4 +263,4 @@ function SortableTable({ current_data, previous_data }) {
   );
 }
 
-export default SortableTable;
+export default PowerList;
