@@ -170,37 +170,37 @@ function SortableTable({ current_data, previous_data }) {
                     <tr className="text-orange-300">
                         <th className="text-lg font-bold text-left pb-4"></th>
                         <th className="text-lg font-bold text-left pb-4">
-                            <a href="#" onClick={() => sortBy("name")}>
+                            <a href="#" onClick={() => sortBy("name")} className="relative">
                                 <span className="mr-2">Name</span>
                                 {sortConfig.key === "name" && (
-                                    sortConfig.direction === "asc" ? <span>↑</span> : <span>↓</span>
+                                    sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
                         <th className="text-lg font-bold text-left pb-4 pl-3 pr-3">
-                            <a href="#" onClick={() => sortBy("power")}>
+                            <a href="#" onClick={() => sortBy("power")} className="relative">
                                 <span className="mr-2">Power</span>
                                 {sortConfig.key === "power" && (
-                                    sortConfig.direction === "asc" ? <span>↑</span> : <span>↓</span>
+                                    sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
                         <th className="text-lg font-bold text-left pb-4 pl-3 pr-3">
-                            <a href="#" onClick={() => sortBy("level")}>
+                            <a href="#" onClick={() => sortBy("level")} className="relative">
                                 <span className="mr-2">Level</span>
                                 {sortConfig.key === "level" && (
-                                    sortConfig.direction === "asc" ? <span>↑</span> : <span>↓</span>
+                                    sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
                         <th className="text-lg font-bold text-left pb-4">
-                            <a href="#" onClick={() => sortBy("pet")}>
+                            <a href="#" onClick={() => sortBy("pet")} className="relative">
                                 <span className="mr-2">Pet</span>
                                 {sortConfig.key === "pet" && (
-                                    sortConfig.direction === "asc" ? <span>↑</span> : <span>↓</span>
+                                    sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
