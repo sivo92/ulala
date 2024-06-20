@@ -16,7 +16,7 @@ dumps = dumps.sort((a, b) => new Date(b.id).getTime() - new Date(a.id).getTime()
             {dumps.map((dump: Dumps) => {
                 return (
                     <li class="mb-2">
-                        <a href=`/power-list/${dump.id}` class="text-blue-500 hover:underline">{dump.id}</a>
+                        <a href={`/power-list/${dump.id}`} class="text-blue-500 hover:underline">{dump.id}</a>
                     </li>
                 )
             })}

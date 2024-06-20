@@ -1,5 +1,43 @@
 import { useState, useEffect } from "react";
 
+import tank from "../images/tank.png";
+import heal from "../images/heal.png";
+
+function getClassColor(class_name) {
+    switch(class_name) {
+        case "Gladiator":
+            return "text-red-500";
+        case "Warrior":
+                return "text-red-500";
+        case "Druid":
+            return "text-cyan-500";
+        case "Shaman":
+            return "text-violet-600";
+        case "Hunter":
+            return "text-yellow-600";
+        case "Mage":
+            return "text-cyan-500";
+        case "Assassin":
+            return "text-yellow-600";
+        case "Warlock":
+            return "text-violet-600";
+
+        default:
+            return "";
+    }
+}
+
+function getClassIcon(class_name) {
+    switch(class_name) {
+        case "Tank":
+            return <img src={tank.src} alt="tank" className="ml-1 mr-1 w-4 h-4" />;
+        case "Healer":
+            return <img src={heal.src} alt="heal" className="ml-1 mr-1 w-4 h-4" />;
+        default:
+            return "";
+    }
+}
+
 function PowerList({ current_data, previous_data }) {
     const [sortedData, setSortedData] = useState(current_data.chars);
     const [isSortedByGains, setIsSortedByGains] = useState(false);
@@ -167,37 +205,37 @@ function PowerList({ current_data, previous_data }) {
             <table className="table-auto w-3/4 mx-auto">
                 <thead>
                     <tr className="text-orange-300">
-                        <th className="text-lg font-bold text-left pb-4"></th>
-                        <th className="text-lg font-bold text-left pb-4">
+                        <th className="text-lg font-bold text-left pb-4 pl-1 pr-1"></th>
+                        <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <a href="#" onClick={() => sortBy("name")} className="relative">
-                                <span className="mr-2">Name</span>
+                                <span className="mr-0.5">Name</span>
                                 {sortConfig.key === "name" && (
                                     sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
-                        <th className="text-lg font-bold text-left pb-4 pl-3 pr-3">
+                        <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <a href="#" onClick={() => sortBy("power")} className="relative">
-                                <span className="mr-2">Power</span>
+                                <span className="mr-0.5">Power</span>
                                 {sortConfig.key === "power" && (
                                     sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
-                        <th className="text-lg font-bold text-left pb-4 pl-3 pr-3">
+                        <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <a href="#" onClick={() => sortBy("level")} className="relative">
-                                <span className="mr-2">Level</span>
+                                <span className="mr-0.5">Level</span>
                                 {sortConfig.key === "level" && (
                                     sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
                             </a>
                         </th>
 
-                        <th className="text-lg font-bold text-left pb-4">
+                        <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <a href="#" onClick={() => sortBy("pet")} className="relative">
-                                <span className="mr-2">Pet</span>
+                                <span className="mr-0.5">Pet</span>
                                 {sortConfig.key === "pet" && (
                                     sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                 )}
@@ -222,14 +260,16 @@ function PowerList({ current_data, previous_data }) {
 
                         return (
                             <tr className="text-neutral-300 border-t border-gray-700" key={index}>
-                                <td className="text-right text-slate-500 pr-1">{index + 1}</td> 
+                                <td className="text-right text-slate-500 pl-1 pr-1">{index + 1}</td> 
                                 <td>
-                                    <div className="md:flex md:items-center">
-                                        {!previous_char && <span className="text-sm text-red-500">NEW</span>}<span className="lg:text-lg md:text-base font-bold">{char.char_name}</span>
+                                    <div className="flex items-center">
+                                        <span className={`lg:text-lg md:text-base font-bold ${getClassColor(char.class_name)}`}>{char.char_name}</span>
+                                        { getClassIcon(char.class_type) }
+                                        {!previous_char && <span className="text-sm text-red-500">(N)</span>}
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="md:flex md:items-center pl-3 pr-3">
+                                    <div className="md:flex md:items-center pl-1 pr-1">
                                         <span className="lg:text-lg md:text-base font-bold">{Number(char.char_cp).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${cp_color}`}>{cp_arrow} {Number(cp_diff).toLocaleString()}</span>
@@ -237,7 +277,7 @@ function PowerList({ current_data, previous_data }) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="md:flex md:items-center pl-3 pr-3">
+                                    <div className="md:flex md:items-center pl-1 pr-1">
                                         <span className="lg:text-lg md:text-base font-bold">{Number(char.char_level).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${level_color}`}>{level_arrow} {Number(level_diff).toLocaleString()}</span>
@@ -246,7 +286,7 @@ function PowerList({ current_data, previous_data }) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="md:flex md:items-center">
+                                    <div className="md:flex md:items-center pl-1 pr-1">
                                         <span className="lg:text-lg md:text-base font-bold">{Number(char.pet_level).toLocaleString()}</span>
                                         <div className="md:ml-2">
                                             <span className={`text-sm ${pet_color}`}>{pet_arrow} {Number(pet_diff).toLocaleString()}</span>

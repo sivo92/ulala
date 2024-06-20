@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import PowerList from '../../components/PowerList.jsx';
 
-interface Dumps {
+interface DumpList {
     id: string;
     file: string;
 }
@@ -24,29 +24,29 @@ interface Dump {
 
 const { id } = Astro.params;
 
-const dumps = await fetch("https://ulala-au3.pages.dev/dumps.json").then(resp => resp.json());
+const dumps: DumpList[] = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/dumps.json`).then(resp => resp.json());
 
-const index = dumps.findIndex((dump: Dumps) => dump.id === id);
+const index: number = dumps.findIndex((dump: DumpList) => dump.id === id);
 if (index === -1) {
     return Astro.redirect("/power-lists");
 }
 
-const dump = dumps[index];
-const previous_dump = index > 0 ? dumps[index - 1] : null;
+const current_dump: DumpList = dumps[index];
+const previous_dump: DumpList | null = index > 0 ? dumps[index - 1] : null;
 
 let current_data: Dump;
 let previous_data: Dump | null = null;
 try {
-    current_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${dump.file}`).then(resp => resp.json());
+    current_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${current_dump.file}`).then(resp => resp.json());
     if (previous_dump) {
         previous_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${previous_dump.file}`).then(resp => resp.json());
     }
-} catch (error) {
+} catch (error: any) {
     return Astro.redirect("/power-lists");
 }
 ---
 
-<Layout title={dump.id}>
+<Layout title={current_dump.id}>
     <PowerList client:load current_data={current_data} previous_data={previous_data} />
 </Layout>
 
