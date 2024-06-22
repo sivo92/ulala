@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CharacterModal from "./CharacterModal";
 
 import tank from "../images/tank.png";
 import heal from "../images/heal.png";
+
+import * as htmlToImage from "html-to-image";
 
 function getClassColor(class_name) {
     switch(class_name) {
@@ -40,6 +42,8 @@ function getClassIcon(class_name) {
 }
 
 function PowerList({ current_data, previous_data }) {
+    const ref = useRef(null)
+
     const [sortedData, setSortedData] = useState(current_data.chars);
     const [isSortedByGains, setIsSortedByGains] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: "power", direction: "desc" });
@@ -204,11 +208,32 @@ function PowerList({ current_data, previous_data }) {
         }
     }, [isSortedByGains, sortConfig, current_data.chars]);
 
+    const downloadPowerList = async () => {
+        "use client"
+
+        if (ref.current === null) {
+            return
+        }
+
+        const filter = (node) => {
+            const exclusionClasses = ["power-list-gains", "power-list-thead", "power-list-dl"];
+            return !exclusionClasses.some((classname) => node.classList?.contains(classname));
+        }
+
+        htmlToImage.toPng(ref.current, { filter: filter, cacheBust: true })
+            .then(function (dataUrl) {
+                const fakeLink = document.createElement("a");
+                fakeLink.download = "power-list.png";
+                fakeLink.href = dataUrl;
+                fakeLink.click();
+            });
+    };
+   
     return (
-        <>
+        <div ref={ref} className="bg-gray-800">
             <CharacterModal char={charModalData} isModalOpen={isCharModalOpen} closeModal={closeCharModal} />
-            <div className="bg-gray-800 text-white m-1">
-                <div className="m-4 flex justify-center items-center">
+            <div className="text-white m-1">
+                <div className="power-list-gains flex justify-center items-center m-4">
                     <label className="inline-flex items-center cursor-pointer">
                         <input type="checkbox" className="sr-only peer" onChange={sortByGains} />
                         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
@@ -217,7 +242,7 @@ function PowerList({ current_data, previous_data }) {
                 </div>
 
                 <table className="table-auto w-full md:w-3/4 lg:w-2/4 mx-auto">
-                    <thead>
+                    <thead className="power-list-thead">
                         <tr className="text-orange-300">
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1"></th>
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
@@ -317,7 +342,11 @@ function PowerList({ current_data, previous_data }) {
                     </tbody>
                 </table>
             </div>
-        </>
+
+            <div className="power-list-dl flex justify-center mt-4">
+                 <a href="#" onClick={(e) => {e.preventDefault(); downloadPowerList()}} className="text-gray-500 hover:underline">Download Power-List (takes a few seconds)</a>
+            </div>          
+        </div>
     );
 }
 
