@@ -1,10 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import CharacterModal from "./CharacterModal";
 
 import tank from "../images/tank.png";
 import heal from "../images/heal.png";
-
-import * as htmlToImage from "html-to-image";
 
 function getClassColor(class_name) {
     switch(class_name) {
@@ -42,14 +40,14 @@ function getClassIcon(class_name) {
 }
 
 function PowerList({ current_data, previous_data }) {
-    const ref = useRef(null)
-
     const [sortedData, setSortedData] = useState(current_data.chars);
     const [isSortedByGains, setIsSortedByGains] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: "power", direction: "desc" });
 
     const [isCharModalOpen, setIsCharModalOpen] = useState(false);
     const [charModalData, setCharModalData] = useState(null);
+
+    const [isScreenshotMode, setIsScreenshotMode] = useState(false);
 
     const openCharModal = (char) => {
         setCharModalData(char);
@@ -208,29 +206,36 @@ function PowerList({ current_data, previous_data }) {
         }
     }, [isSortedByGains, sortConfig, current_data.chars]);
 
-    const downloadPowerList = async () => {
-        "use client"
+    const toggleScreenshoteMode = () => {
+        setIsScreenshotMode(!isScreenshotMode);
+    }
 
-        if (ref.current === null) {
-            return
+    useEffect(() => {
+        if (isScreenshotMode) {
+            const powerListGains = document.querySelector(".power-list-gains").style.display = "none";
+            const powerListThead = document.querySelector(".power-list-thead").style.display = "none";
+            // const powerListScMode = document.querySelector(".power-list-sc-mode").style.display = "none";
+        } else {
+            const powerListGains = document.querySelector(".power-list-gains").style.display = "flex";
+            const powerListThead = document.querySelector(".power-list-thead").style.display = "table-header-group";
+            // const powerListScMode = document.querySelector(".power-list-sc-mode").style.display = "flex";
+    
         }
 
-        const filter = (node) => {
-            const exclusionClasses = ["power-list-gains", "power-list-thead", "power-list-dl"];
-            return !exclusionClasses.some((classname) => node.classList?.contains(classname));
-        }
+        // function handleClick() {
+        //     console.log('click event triggered', isScreenshotMode);
+        //     setIsScreenshotMode(false);
+        // }
+        // document.body.addEventListener('click', handleClick);
+        // return () => {
+        //     document.body.removeEventListener('click', handleClick);
+        // };
 
-        htmlToImage.toPng(ref.current, { filter: filter, cacheBust: true })
-            .then(function (dataUrl) {
-                const fakeLink = document.createElement("a");
-                fakeLink.download = "power-list.png";
-                fakeLink.href = dataUrl;
-                fakeLink.click();
-            });
-    };
-   
+
+    }, [isScreenshotMode])
+
     return (
-        <div ref={ref} className="bg-gray-800">
+        <div className="bg-gray-800">
             <CharacterModal char={charModalData} isModalOpen={isCharModalOpen} closeModal={closeCharModal} />
             <div className="text-white m-1">
                 <div className="power-list-gains flex justify-center items-center m-4">
@@ -343,8 +348,8 @@ function PowerList({ current_data, previous_data }) {
                 </table>
             </div>
 
-            <div className="power-list-dl flex justify-center mt-4">
-                 <a href="#" onClick={(e) => {e.preventDefault(); downloadPowerList()}} className="text-gray-500 hover:underline">Download Power-List (takes a few seconds)</a>
+            <div className="power-list-sc-mode flex justify-center mt-4">
+                 <a href="#" onClick={(e) => {e.preventDefault(); toggleScreenshoteMode()}} className="text-gray-500 hover:underline">Screenshot Mode</a>
             </div>          
         </div>
     );
