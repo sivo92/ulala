@@ -219,19 +219,7 @@ function PowerList({ current_data, previous_data }) {
             const powerListGains = document.querySelector(".power-list-gains").style.display = "flex";
             const powerListThead = document.querySelector(".power-list-thead").style.display = "table-header-group";
             // const powerListScMode = document.querySelector(".power-list-sc-mode").style.display = "flex";
-    
         }
-
-        // function handleClick() {
-        //     console.log('click event triggered', isScreenshotMode);
-        //     setIsScreenshotMode(false);
-        // }
-        // document.body.addEventListener('click', handleClick);
-        // return () => {
-        //     document.body.removeEventListener('click', handleClick);
-        // };
-
-
     }, [isScreenshotMode])
 
     return (
