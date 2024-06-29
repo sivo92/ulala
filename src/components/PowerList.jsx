@@ -203,7 +203,7 @@ function PowerList({ current_data, previous_data }) {
 
                 </div>
                 <div className="flex justify-end text-lg font-bold text-neutral-300 items-center">
-                    <a href="/power-lists">More Lists</a>
+                    <a href="/power-lists" className="hover:underline">More Lists</a>
                 </div>
             </div>
             <table className="table-auto w-full md:w-3/4 xl:w-2/4 mx-auto">
