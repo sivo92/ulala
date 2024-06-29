@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CharacterModal from "./CharacterModal";
 
+import newMember from "../images/new.png";
 import tank from "../images/tank.png";
 import heal from "../images/heal.png";
 
@@ -9,7 +9,7 @@ function getClassColor(class_name) {
         case "Gladiator":
             return "text-red-500";
         case "Warrior":
-                return "text-red-500";
+            return "text-red-500";
         case "Druid":
             return "text-cyan-500";
         case "Shaman":
@@ -22,7 +22,6 @@ function getClassColor(class_name) {
             return "text-yellow-600";
         case "Warlock":
             return "text-violet-600";
-
         default:
             return "";
     }
@@ -43,20 +42,6 @@ function PowerList({ current_data, previous_data }) {
     const [sortedData, setSortedData] = useState(current_data.chars);
     const [isSortedByGains, setIsSortedByGains] = useState(false);
     const [sortConfig, setSortConfig] = useState({ key: "power", direction: "desc" });
-
-    const [isCharModalOpen, setIsCharModalOpen] = useState(false);
-    const [charModalData, setCharModalData] = useState(null);
-
-    const [isScreenshotMode, setIsScreenshotMode] = useState(false);
-
-    const openCharModal = (char) => {
-        setCharModalData(char);
-        setIsCharModalOpen(true);
-    }
-    
-    const closeCharModal = () => {
-        setIsCharModalOpen(false);
-    }
 
     const sortByGains = () => {
         if (isSortedByGains) {
@@ -206,72 +191,54 @@ function PowerList({ current_data, previous_data }) {
         }
     }, [isSortedByGains, sortConfig, current_data.chars]);
 
-    const toggleScreenshoteMode = () => {
-        setIsScreenshotMode(!isScreenshotMode);
-    }
-
-    useEffect(() => {
-        if (isScreenshotMode) {
-            const powerListGains = document.querySelector(".power-list-gains").style.display = "none";
-            const powerListThead = document.querySelector(".power-list-thead").style.display = "none";
-            // const powerListScMode = document.querySelector(".power-list-sc-mode").style.display = "none";
-        } else {
-            const powerListGains = document.querySelector(".power-list-gains").style.display = "flex";
-            const powerListThead = document.querySelector(".power-list-thead").style.display = "table-header-group";
-            // const powerListScMode = document.querySelector(".power-list-sc-mode").style.display = "flex";
-        }
-    }, [isScreenshotMode])
-
     return (
-        <div className="bg-gray-800">
-            <CharacterModal char={charModalData} isModalOpen={isCharModalOpen} closeModal={closeCharModal} />
-            <div className="text-white m-1">
-                <div className="power-list-gains flex justify-center items-center m-4">
-                    <label className="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" className="sr-only peer" onChange={sortByGains} />
-                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                        <span className="ms-3 text-lg font-bold">Gaaaains???</span>
-                    </label>
-                </div>
-
-                <table className="table-auto w-full md:w-3/4 lg:w-2/4 mx-auto">
-                    <thead className="power-list-thead">
+        <div className="bg-gray-800 flex flex-col items-start w-full p-2">
+            <div className="flex justify-start w-full md:w-3/4 xl:w-2/4 mx-auto"> 
+                <label className="inline-flex items-center cursor-pointer p-4 text-neutral-300">
+                    <input type="checkbox" className="sr-only peer" onChange={sortByGains} />
+                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    <span className="ms-3 text-lg font-bold">sort by gains</span>
+                </label>
+            </div>
+            <div className="w-full">
+                <table className="table-auto w-full md:w-3/4 xl:w-2/4 mx-auto">
+                    <thead>
                         <tr className="text-orange-300">
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1"></th>
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
-                                <a href="#" onClick={(e) => {e.preventDefault(); sortBy("name")}} className="relative hover:underline">
+                                <button onClick={(e) => {e.preventDefault(); sortBy("name")}} className="hover:underline">
                                     <span className="mr-0.5">Name</span>
                                     {sortConfig.key === "name" && (
                                         sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                     )}
-                                </a>
+                                </button>
                             </th>
 
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
-                                <a href="#" onClick={(e) => {e.preventDefault(); sortBy("power")}} className="relative hover:underline">
+                                <button onClick={(e) => {e.preventDefault(); sortBy("power")}} className=" hover:underline">
                                     <span className="mr-0.5">Power</span>
                                     {sortConfig.key === "power" && (
                                         sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                     )}
-                                </a>
+                                </button>
                             </th>
 
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
-                                <a href="#" onClick={(e) => {e.preventDefault(); sortBy("level")}} className="relative hover:underline">
+                                <button onClick={(e) => {e.preventDefault(); sortBy("level")}} className="hover:underline">
                                     <span className="mr-0.5">Level</span>
                                     {sortConfig.key === "level" && (
                                         sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                     )}
-                                </a>
+                                </button>
                             </th>
 
                             <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
-                                <a href="#" onClick={(e) => {e.preventDefault(); sortBy("pet")}} className="relative hover:underline">
+                                <button onClick={(e) => {e.preventDefault(); sortBy("pet")}} className="hover:underline">
                                     <span className="mr-0.5">Pet</span>
                                     {sortConfig.key === "pet" && (
                                         sortConfig.direction === "asc" ? <span className="absolute">↑</span> : <span className="absolute">↓</span>
                                     )}
-                                </a>
+                                </button>
                             </th>
                         </tr>
                     </thead>
@@ -295,18 +262,14 @@ function PowerList({ current_data, previous_data }) {
                                     <td className="text-right text-slate-500 pl-1 pr-1">{index + 1}</td> 
                                     <td>
                                         <div className="flex items-center">
-                                            <span className={`lg:text-lg md:text-base font-bold ${getClassColor(char.class_name)}`}>
-                                                <a href="#" onClick={(e) => { e.preventDefault(); openCharModal(char)}} className="hover:underline">
-                                                    {char.char_name}
-                                                </a>
-                                            </span>
+                                            <span className={`text-lg font-bold ${getClassColor(char.class_name)}`}>{char.char_name}</span>
                                             { getClassIcon(char.class_type) }
-                                            {!previous_char && <span className="text-sm text-red-500">(N)</span>}
+                                            {!previous_char && <img src={newMember.src} alt="new" className="ml-1 mr-1 w-4 h-4" /> }
                                         </div>
                                     </td>
                                     <td>
                                         <div className="md:flex md:items-center pl-1 pr-1">
-                                            <span className="lg:text-lg md:text-base font-bold">{Number(char.char_cp).toLocaleString()}</span>
+                                            <span className="md:text-lg font-bold">{Number(char.char_cp).toLocaleString()}</span>
                                             <div className="md:ml-2">
                                                 <span className={`text-sm ${cp_color}`}>{cp_arrow} {Number(cp_diff).toLocaleString()}</span>
                                             </div>
@@ -314,7 +277,7 @@ function PowerList({ current_data, previous_data }) {
                                     </td>
                                     <td>
                                         <div className="md:flex md:items-center pl-1 pr-1">
-                                            <span className="lg:text-lg md:text-base font-bold">{Number(char.char_level).toLocaleString()}</span>
+                                            <span className="md:text-lg font-bold">{Number(char.char_level).toLocaleString()}</span>
                                             <div className="md:ml-2">
                                                 <span className={`text-sm ${level_color}`}>{level_arrow} {Number(level_diff).toLocaleString()}</span>
                                             </div>
@@ -323,7 +286,7 @@ function PowerList({ current_data, previous_data }) {
                                     </td>
                                     <td>
                                         <div className="md:flex md:items-center pl-1 pr-1">
-                                            <span className="lg:text-lg md:text-base font-bold">{Number(char.pet_level).toLocaleString()}</span>
+                                            <span className="md:text-lg font-bold">{Number(char.pet_level).toLocaleString()}</span>
                                             <div className="md:ml-2">
                                                 <span className={`text-sm ${pet_color}`}>{pet_arrow} {Number(pet_diff).toLocaleString()}</span>
                                             </div>
@@ -335,10 +298,6 @@ function PowerList({ current_data, previous_data }) {
                     </tbody>
                 </table>
             </div>
-
-            <div className="power-list-sc-mode flex justify-center mt-4">
-                 <a href="#" onClick={(e) => {e.preventDefault(); toggleScreenshoteMode()}} className="text-gray-500 hover:underline">Screenshot Mode</a>
-            </div>          
         </div>
     );
 }
