@@ -193,9 +193,9 @@ function PowerList({ current_data, previous_data }) {
 
     return (
         <div className="bg-gray-800 p-2">
-            <div className="flex justify-between w-full md:w-3/4 xl:w-2/4 mx-auto">
+            <div className="flex justify-between w-full md:w-3/4 xl:w-2/4 mx-auto pt-5 pb-5">
                 <div className="flex justify-start"> 
-                    <label className="inline-flex items-center cursor-pointer p-4">
+                    <label className="inline-flex items-center cursor-pointer">
                         <input type="checkbox" className="sr-only peer" onChange={sortByGains} />
                         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                         <span className="ms-3 text-lg font-bold text-neutral-300">sort by gains</span>
