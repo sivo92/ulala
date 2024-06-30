@@ -200,7 +200,6 @@ function PowerList({ current_data, previous_data }) {
                         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                         <span className="ms-3 text-lg font-bold text-neutral-300">sort by gains</span>
                     </label>
-
                 </div>
                 <div className="flex justify-end text-lg font-bold text-neutral-300 items-center">
                     <a href="/power-lists" className="hover:underline">More Lists</a>
@@ -218,7 +217,6 @@ function PowerList({ current_data, previous_data }) {
                                 )}
                             </button>
                         </th>
-
                         <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <button onClick={(e) => {e.preventDefault(); sortBy("power")}} className=" hover:underline">
                                 <span className="mr-0.5">Power</span>
@@ -227,7 +225,6 @@ function PowerList({ current_data, previous_data }) {
                                 )}
                             </button>
                         </th>
-
                         <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <button onClick={(e) => {e.preventDefault(); sortBy("level")}} className="hover:underline">
                                 <span className="mr-0.5">Level</span>
@@ -236,7 +233,6 @@ function PowerList({ current_data, previous_data }) {
                                 )}
                             </button>
                         </th>
-
                         <th className="text-lg font-bold text-left pb-4 pl-1 pr-1">
                             <button onClick={(e) => {e.preventDefault(); sortBy("pet")}} className="hover:underline">
                                 <span className="mr-0.5">Pet</span>
