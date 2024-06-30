@@ -10,8 +10,11 @@ let dumps: DumpList[] = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/dumps.j
 dumps = dumps.sort((a, b) => new Date(b.id).getTime() - new Date(a.id).getTime());
 ---
 
-<Layout title="Ulala">
-    <div class="flex flex-col items-center justify-center ">
+<Layout title="Power Lists | Ulala Blaze New World">
+    <div class="flex items-center justify-center p-5">
+        <a href="/"><img src="/assets/images/ulala.jpg" alt="logo" class="w-16 h-16 rounded-full"></a> 
+    </div>
+    <div class="flex flex-col items-center justify-center">
         <ul class="list-decimal list-inside p-4 text-white font-bold text-lg">
             {dumps.map((dump: DumpList) => {
                 return (

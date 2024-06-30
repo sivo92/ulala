@@ -28,7 +28,7 @@ const dumps: DumpList[] = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/dumps
 
 const index: number = dumps.findIndex((dump: DumpList) => dump.id === id);
 if (index === -1) {
-    return Astro.redirect("/power-lists");
+    return Astro.redirect("/404");
 }
 
 const current_dump: DumpList = dumps[index];
@@ -42,11 +42,11 @@ try {
         previous_data = await fetch(`${import.meta.env.PUBLIC_DUMPS_URL}/${previous_dump.file}`).then(resp => resp.json());
     }
 } catch (error: any) {
-    return Astro.redirect("/power-lists");
+    return Astro.redirect("/404");
 }
 ---
 
-<Layout title={current_dump.id}>
+<Layout title={current_dump.id + " | Power List New World"}>
     <PowerList client:load current_data={current_data} previous_data={previous_data} />
 </Layout>
 
